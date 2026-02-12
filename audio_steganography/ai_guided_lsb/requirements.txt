@@ -1,0 +1,6 @@
+# AI-Guided LSB Audio Steganography
+# Minimal dependencies - no heavy ML libraries
+
+numpy
+scipy
+soundfile

@@ -1,0 +1,6 @@
+# AI-Guided Adaptive LSB Text Steganography
+# Minimal dependencies - no ML training required
+
+numpy
+opencv-python
+Pillow

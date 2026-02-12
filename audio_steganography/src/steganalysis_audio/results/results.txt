@@ -1,0 +1,4 @@
+Accuracy: 100.00%
+Confusion Matrix:
+[[22  0]
+ [ 0 18]]

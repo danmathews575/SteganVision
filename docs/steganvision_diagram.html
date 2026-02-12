@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SteganVision Architecture</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #333;
+            padding: 40px;
+            background: white;
+            width: fit-content;
+            min-width: 1200px;
+            margin: 20px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modules-wrapper {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            flex: 1;
+            border: 1px dashed #666;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+
+        .module-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 1px solid #999;
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        .block {
+            border: 1px solid black;
+            padding: 12px 15px;
+            margin: 10px 0;
+            background: white;
+            text-align: center;
+            width: 220px;
+            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .block.input {
+            background-color: #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .block.process {
+            background-color: #fff;
+            border: 2px solid black;
+            font-weight: bold;
+            padding: 20px 10px;
+        }
+
+        .block.output {
+            background-color: #f0f0f0;
+            border-style: dotted;
+        }
+
+        /* Arrows */
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid black;
+            margin: 5px 0;
+        }
+
+        .line-vertical {
+            width: 2px;
+            height: 25px;
+            background-color: black;
+            margin: 0 auto;
+        }
+
+        .inputs-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-joiner {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 20px;
+            position: relative;
+        }
+
+        /* Connecting lines for inputs */
+        .input-connector {
+            position: absolute;
+            top: 0;
+            left: 25%;
+            right: 25%;
+            height: 10px;
+            border-bottom: 2px solid black;
+            border-left: 2px solid black;
+            /* Approximate logic for join */
+            border-right: 2px solid black;
+        }
+
+        .connector-line {
+            height: 15px;
+            width: 2px;
+            background: black;
+            margin-bottom: 0;
+        }
+
+        .design-objectives {
+            width: 100%;
+            border-top: 2px solid #333;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .obj-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .obj-list {
+            display: flex;
+            gap: 80px;
+            font-size: 16px;
+        }
+
+        .obj-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .check-icon {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="main-title">SteganVision Framework Architecture</div>
+
+        <div class="modules-wrapper">
+            <!-- Module 1: AI-Guided Text Steganography -->
+            <div class="module">
+                <div class="module-title">AI-Guided Text Steganography</div>
+
+                <div class="inputs-row">
+                    <div class="block input">Cover Medium<br>(Text)</div>
+                    <div class="block input">Secret Input<br>(Text/Data)</div>
+                </div>
+
+                <!-- Visual arrows joining inputs -->
+                <div style="display: flex; justify-content: center; width: 100%; height: 20px; margin-bottom: 0;">
+                    <svg width="200" height="30">
+                        <!-- Left input line -->
+                        <line x1="40" y1="0" x2="100" y2="25" stroke="black" stroke-width="2" />
+                        <!-- Right input line -->
+                        <line x1="160" y1="0" x2="100" y2="25" stroke="black" stroke-width="2" />
+                        <!-- Arrowhead -->
+                        <polygon points="100,30 95,20 105,20" style="fill:black;stroke:black;stroke-width:1" />
+                    </svg>
+                </div>
+
+                <div class="block process">AI-Guided Embedding</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block">Stego Text</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block process" style="border-style: dashed;">Extraction / Recovery</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block output">Recovered Secret</div>
+            </div>
+
+            <!-- Module 2: AI-Guided Audio Steganography -->
+            <div class="module">
+                <div class="module-title">AI-Guided Audio Steganography</div>
+
+                <div class="inputs-row">
+                    <div class="block input">Cover Medium<br>(Audio)</div>
+                    <div class="block input">Secret Input<br>(Data)</div>
+                </div>
+
+                <!-- Visual arrows joining inputs -->
+                <div style="display: flex; justify-content: center; width: 100%; height: 20px; margin-bottom: 0;">
+                    <svg width="200" height="30">
+                        <!-- Left input line -->
+                        <line x1="40" y1="0" x2="100" y2="25" stroke="black" stroke-width="2" />
+                        <!-- Right input line -->
+                        <line x1="160" y1="0" x2="100" y2="25" stroke="black" stroke-width="2" />
+                        <!-- Arrowhead -->
+                        <polygon points="100,30 95,20 105,20" style="fill:black;stroke:black;stroke-width:1" />
+                    </svg>
+                </div>
+
+                <div class="block process">AI-Guided Embedding</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block">Stego Audio</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block process" style="border-style: dashed;">Extraction / Recovery</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block output">Recovered Secret</div>
+            </div>
+
+            <!-- Module 3: GAN-Based Image Steganography -->
+            <div class="module">
+                <div class="module-title">GAN-Based Image Steganography</div>
+
+                <div class="inputs-row">
+                    <div class="block input">Cover Medium<br>(Image)</div>
+                    <div class="block input">Secret Input<br>(Image)</div>
+                </div>
+
+                <!-- Visual arrows joining inputs -->
+                <div style="display: flex; justify-content: center; width: 100%; height: 20px; margin-bottom: 0;">
+                    <svg width="200" height="30">
+                        <!-- Left input line -->
+                        <line x1="40" y1="0" x2="100" y2="25" stroke="black" stroke-width="2" />
+                        <!-- Right input line -->
+                        <line x1="160" y1="0" x2="100" y2="25" stroke="black" stroke-width="2" />
+                        <!-- Arrowhead -->
+                        <polygon points="100,30 95,20 105,20" style="fill:black;stroke:black;stroke-width:1" />
+                    </svg>
+                </div>
+
+                <div class="block process">GAN-Based Embedding Model</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block">Stego Image</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block process" style="border-style: dashed;">Extraction / Recovery</div>
+
+                <div class="line-vertical"></div>
+                <div class="arrow-down"></div>
+
+                <div class="block output">Recovered Secret</div>
+            </div>
+        </div>
+
+        <div class="design-objectives">
+            <div class="obj-title">Design Objectives</div>
+            <div class="obj-list">
+                <div class="obj-item"><span class="check-icon">✓</span> Imperceptibility</div>
+                <div class="obj-item"><span class="check-icon">✓</span> Security</div>
+                <div class="obj-item"><span class="check-icon">✓</span> Exact Decoding</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

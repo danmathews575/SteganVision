@@ -1,0 +1,41 @@
+# GAN-based Image Steganography
+
+PyTorch implementation of GAN-based image steganography inspired by the HiDDeN paper.
+
+## Project Structure
+
+```
+MajorP/
+├── data/                   # Data directory
+│   ├── raw/               # Raw datasets
+│   ├── processed/         # Processed datasets
+│   └── outputs/           # Generated outputs
+├── src/                   # Source code
+│   ├── models/            # Model architectures
+│   ├── data/              # Data loading and preprocessing
+│   ├── losses/            # Loss functions
+│   ├── utils/             # Utility functions
+│   └── training/          # Training logic
+├── configs/               # Configuration files
+├── notebooks/             # Jupyter notebooks for experiments
+├── scripts/               # Training and evaluation scripts
+├── tests/                 # Unit tests
+└── checkpoints/           # Model checkpoints
+```
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+```
+
+## Features
+
+- Modular architecture for CNN baseline and GAN extension
+- Configurable training pipeline
+- Support for multiple datasets
+- Comprehensive evaluation metrics
+
+## References
+
+- HiDDeN: Hiding Data With Deep Networks (Zhu et al., 2018)

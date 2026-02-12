@@ -1,0 +1,44 @@
+# Configuration for CNN baseline training
+
+# Model configuration
+model:
+  encoder:
+    message_length: 100
+    hidden_channels: 64
+  decoder:
+    message_length: 100
+    hidden_channels: 64
+
+# Data configuration
+data:
+  train_dir: "data/raw/train"
+  val_dir: "data/raw/val"
+  image_size: 128
+  batch_size: 32
+  num_workers: 2  # Optimized for Windows
+
+# Training configuration
+training:
+  num_epochs: 100
+  learning_rate: 0.0001
+  optimizer: "adam"
+  scheduler: "step"
+  scheduler_step: 30
+  scheduler_gamma: 0.5
+
+# Loss configuration
+loss:
+  image_weight: 1.0
+  message_weight: 1.0
+  image_loss_type: "mse"  # Options: mse, l1, perceptual
+
+# Logging configuration
+logging:
+  log_dir: "logs/cnn_baseline"
+  checkpoint_dir: "checkpoints/cnn_baseline"
+  save_frequency: 10
+  logger_type: "tensorboard"  # Options: tensorboard, wandb
+
+# Misc
+seed: 42
+device: "cuda"

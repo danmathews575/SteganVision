@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SteganVision Model Block Diagrams</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            color: #34495e;
+            margin-top: 0;
+        }
+
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .description {
+            background-color: #f1f8ff;
+            border-left: 4px solid #0366d6;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>SteganVision Detailed Model Architectures</h1>
+
+    <div class="container">
+        <h2>1. Encoder Architecture (Generator)</h2>
+        <div class="description">
+            <p><strong>Type:</strong> U-Net with Skip Connections</p>
+            <p><strong>Goal:</strong> Embed Secret Image into Cover Image while preserving details.</p>
+            <p><strong>Input:</strong> Cover (3ch) + Secret (1ch) = 4 channels.</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    subgraph Input
+    Cover[Cover Image (3ch)]
+    Secret[Secret Image (1ch)]
+    Concat[Concatenate (4ch)]
+    end
+
+    subgraph Encoder_UNet [U-Net Encoder]
+    InitConv[Init Conv (64ch)]
+    
+    subgraph Downsampling
+    D1[DownBlock 1 (128ch)]
+    D2[DownBlock 2 (256ch)]
+    D3[DownBlock 3 (512ch)]
+    end
+    
+    subgraph Bottleneck
+    B1[ConvBlock (512ch)]
+    B2[ConvBlock (512ch)]
+    end
+    
+    subgraph Upsampling
+    U1[UpBlock 1 (256ch)]
+    U2[UpBlock 2 (128ch)]
+    U3[UpBlock 3 (64ch)]
+    end
+    
+    OutputConv[Final Conv + Tanh]
+    end
+
+    Cover --> Concat
+    Secret --> Concat
+    Concat --> InitConv
+    InitConv --> D1
+    D1 --> D2
+    D2 --> D3
+    D3 --> B1
+    B1 --> B2
+    B2 --> U1
+    U1 --> U2
+    U2 --> U3
+    U3 --> OutputConv
+    
+    OutputConv --> Stego[Stego Image (3ch)]
+
+    %% Skip Connections
+    D3 -.-> U1
+    D2 -.-> U2
+    D1 -.-> U3
+    
+    style Encoder_UNet fill:#e1f5fe,stroke:#01579b
+    style Input fill:#f3e5f5,stroke:#4a148c
+            </pre>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>2. Decoder Architecture</h2>
+        <div class="description">
+            <p><strong>Type:</strong> Deep CNN</p>
+            <p><strong>Goal:</strong> Extract Secret Image from Stego Image.</p>
+            <p><strong>Input:</strong> Stego Image (3 channels).</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph Input
+    Stego[Stego Image (3ch)]
+    end
+    
+    subgraph Decoder_CNN [CNN Decoder]
+    L1[Conv (64ch)]
+    L2[Conv (64ch)]
+    L3[Conv (128ch)]
+    L4[Conv (128ch)]
+    L5[Conv (256ch)]
+    L6[Conv (256ch)]
+    L7[Conv (128ch)]
+    L8[Conv (64ch)]
+    Out[Conv 1x1 + Tanh]
+    end
+    
+    subgraph Output
+    RecSecret[Reconstructed Secret (1ch)]
+    end
+    
+    Stego --> L1
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    L4 --> L5
+    L5 --> L6
+    L6 --> L7
+    L7 --> L8
+    L8 --> Out
+    Out --> RecSecret
+
+    style Decoder_CNN fill:#e0f2f1,stroke:#004d40
+    style Input fill:#fff3e0,stroke:#e65100
+    style Output fill:#fff3e0,stroke:#e65100
+            </pre>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>3. Discriminator Architecture (GAN)</h2>
+        <div class="description">
+            <p><strong>Type:</strong> PatchGAN with Spectral Normalization</p>
+            <p><strong>Goal:</strong> Distinguish between Real Cover and Fake Stego.</p>
+            <p><strong>Output:</strong> 16x16 Patch Predictions (averaged to single score).</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    subgraph Input
+    Img[Input Image (3ch)]
+    end
+    
+    subgraph Discriminator_PatchGAN [PatchGAN Discriminator]
+    C1["Conv 4x4, Stride 2 (64ch)"]
+    C2["Conv 4x4, Stride 2 (128ch)"]
+    C3["Conv 4x4, Stride 2 (256ch)"]
+    C4["Conv 4x4, Stride 2 (512ch)"]
+    OutConv["Conv 3x3, Stride 1 (1ch)"]
+    Avg[Global Average Pooling]
+    Sigmoid[Sigmoid Activation]
+    end
+    
+    subgraph Output
+    Score[Real/Fake Score]
+    end
+    
+    Img --> C1
+    C1 --> C2
+    C2 --> C3
+    C3 --> C4
+    C4 --> OutConv
+    OutConv --> Avg
+    Avg --> Sigmoid
+    Sigmoid --> Score
+    
+    style Discriminator_PatchGAN fill:#fbe9e7,stroke:#bf360c
+    style Input fill:#e8eaf6,stroke:#1a237e
+            </pre>
+        </div>
+    </div>
+
+</body>
+
+</html>

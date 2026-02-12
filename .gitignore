@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# Environment
+.env
+.venv
+venv/
+ENV/
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+
+# Large Model Files (100MB+)
+image_steganography/checkpoints/best_model.pth
+image_steganography/checkpoints/gan/gan_checkpoint_epoch_0023.pth
+image_steganography/checkpoints/gan/interrupted_checkpoint.pth
+image_steganography/checkpoints/checkpoint_epoch_*.pth
+image_steganography/checkpoints/gan/gan_checkpoint_epoch_*.pth
+
+# Local/Temp Files
+temp_ai_stego.png
+temp_ai_stego.wav
+temp_secret.txt
+test_results/
+image_steganography/outputs/
+image_steganography/results/
+audio_steganography/output/
+text_steganography/output/
+
+# Large binaries & Data
+image_steganography/checkpoints/final_model.pth
+image_steganography/data/*
+!image_steganography/data/README.md
+tests/outputs/
+
